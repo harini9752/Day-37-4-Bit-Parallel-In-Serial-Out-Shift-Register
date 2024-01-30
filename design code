@@ -1,0 +1,19 @@
+module four_bit_piso_shift_register (
+  input wire clk,
+  input wire parallel_load,
+  input wire [3:0] parallel_input,
+  output reg serial_output
+);
+
+  reg [3:0] shift_register;
+
+  always @(posedge clk) begin
+    if (parallel_load) begin
+      shift_register <= parallel_input;
+    end else begin
+      shift_register <= {shift_register[2:0], 1'b0};
+    end
+    serial_output <= shift_register[3];
+  end
+
+endmodule
