@@ -1,0 +1,33 @@
+module tb_four_bit_piso_shift_register;
+
+  reg clk, parallel_load;
+  reg [3:0] parallel_input;
+  wire serial_output;
+
+  four_bit_piso_shift_register uut (
+    .clk(clk),
+    .parallel_load(parallel_load),
+    .parallel_input(parallel_input),
+    .serial_output(serial_output)
+  );
+
+  initial begin
+    // Test 1: Shift without parallel loading
+    clk = 0;
+    parallel_load = 0;
+    parallel_input = 4'b1101;
+    #10 $display("Time=%0t clk=%b parallel_load=%b parallel_input=%b serial_output=%b", $time, clk, parallel_load, parallel_input, serial_output);
+
+    // Test 2: Parallel load and shift
+    parallel_load = 1;
+    #10 $display("Time=%0t clk=%b parallel_load=%b parallel_input=%b serial_output=%b", $time, clk, parallel_load, parallel_input, serial_output);
+
+    // Add more test cases as needed
+
+    $finish;
+  end
+
+  always #5 clk = ~clk;
+
+endmodule
+
